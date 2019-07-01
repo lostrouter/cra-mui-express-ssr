@@ -1,9 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from '../shared/App';
+import App from '../app/App';
+import theme from '../app/theme';
 import * as serviceWorker from './serviceWorker';
 import { ThemeProvider } from '@material-ui/styles';
-import theme from '../shared/theme';
 import 'typeface-roboto';
 
 function Main() {

@@ -11,8 +11,6 @@ import theme from '../shared/theme';
 const PORT = 8080
 const app = express()
 
-const router = express.Router()
-
 const serverRenderer = (req, res, next) => {
   fs.readFile(path.resolve('./build/index.html'), 'utf8', (err, data) => {
     if (err) {
@@ -35,20 +33,18 @@ const serverRenderer = (req, res, next) => {
       `<div id="root">${html}</div>`
     ).replace(
       '<style id="jss-server-side"></style>',
-      `<style id="jss-server-side">${css}</style>`
+      `<style id="jss-server-side">
+        ${css}
+      </style>`
     );
 
     return res.send(result);
   })
 }
-router.use('/*', serverRenderer)
-
-router.use(
+app.use('/dist',
   express.static(path.resolve(__dirname, '../../', 'build'), { maxAge: '30d' })
 )
-
-// tell the app to use the above rules
-app.use(router)
+app.use(serverRenderer)
 
 // app.use(express.static('./build'))
 app.listen(PORT, () => {
